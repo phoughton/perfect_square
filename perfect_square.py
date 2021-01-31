@@ -1,3 +1,5 @@
+import pytest
+
 # Given a positive integer n, write a function that returns true if it is a perfect square and false otherwise. 
 # Don’t use any built-in math functions like sqrt. Hint: Use binary search!
 # Examples: 
@@ -25,28 +27,25 @@ def perfect_square(target, left=None, right=None):
         return perfect_square(target, mid, right)
     elif try_square > target:
         return perfect_square(target, left, mid)
-    else:
-        print("This should not happen")
 
-print(perfect_square(10))
-print()
-print(perfect_square(9))
-print()
-print(perfect_square(25))
-print()
-print(perfect_square(2))
-print()
-print(perfect_square(1))
-print()
-print(perfect_square(0))
-print()
-print(perfect_square(11))
-print()
-print(perfect_square(12))
-print()
-print()
-print(perfect_square(80))
-print()
-print(perfect_square(81))
-print()
-print(perfect_square(82))
+
+
+@pytest.mark.parametrize("num, answer", [
+        (0, True),
+        (1, True),
+        (2, False),
+        (3, False),
+        (4, True),
+        (9, True),
+        (10, False),
+        (12, False),
+        (13, False),
+        (25, True),
+        (49, True),
+        (50, False),
+        (99, False),
+        (100, True),
+        (101, False)
+    ])
+def test_perfect_square(num, answer):
+    assert perfect_square(num) == answer, f"num: {num}"
